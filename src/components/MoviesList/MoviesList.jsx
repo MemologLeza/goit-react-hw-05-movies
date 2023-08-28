@@ -11,7 +11,7 @@ const MoviesList = ({ moviesData }) => {
           <li key={movie.id} className={styled.listItem}>
             <Link
               className={styled.link}
-              to={'/movies/' + movie.id}
+              to={'/goit-react-hw-05-movies/movies/' + movie.id}
               state={location}
             >
               {movie.original_title}
