@@ -3,8 +3,10 @@ import SearchMovies from 'components/SearchMovies/SearchMovies';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getMovieBySearch } from 'ThemoviedbAPI/ThemoviedbAPI';
+import Loader from 'components/Loader/Loader';
 const MoviesPage = () => {
   const [moviesData, setMoviesData] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [params, setParams] = useSearchParams();
   const searchQuery = useMemo(() => params.get('search'), [params]);
   const handleSearchMovie = useCallback(async () => {
@@ -14,6 +16,7 @@ const MoviesPage = () => {
         id: item.id,
         original_title: item.original_title,
       }));
+
       setMoviesData([...newData]);
     } catch (error) {
       console.log('error', error);
@@ -30,7 +33,12 @@ const MoviesPage = () => {
   return (
     <div>
       <SearchMovies handleSearch={handleSearch} />
-      <MoviesList moviesData={moviesData} />
+      {loader && <Loader />}
+      {!loader && moviesData.length === 0 ? (
+        searchQuery && moviesData.length === 0 && <h2>Not found</h2>
+      ) : (
+        <MoviesList moviesData={moviesData} />
+      )}
     </div>
   );
 };

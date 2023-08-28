@@ -7,7 +7,7 @@ const MoviesList = ({ moviesData }) => {
   return (
     <div className={styled.container}>
       <ol className={styled.list}>
-        {moviesData.map(movie => (
+        {moviesData?.map(movie => (
           <li key={movie.id} className={styled.listItem}>
             <Link
               className={styled.link}

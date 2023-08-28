@@ -1,10 +1,11 @@
 import Loader from 'components/Loader/Loader';
 import React, { Suspense, useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieById } from 'ThemoviedbAPI/ThemoviedbAPI';
 const MovieDetails = () => {
   const [details, setDetails] = useState({});
   const { id } = useParams();
+  const location = useLocation();
   useEffect(() => {
     const setMovieDetails = async id => {
       try {
@@ -58,7 +59,11 @@ const MovieDetails = () => {
         <h4 style={{ padding: '20px' }}>Additional information</h4>
         <ul style={{ listStyle: 'none' }}>
           <li style={{ marginBottom: '20px' }}>
-            <Link style={{ textDecoration: 'none' }} to="cast">
+            <Link
+              style={{ textDecoration: 'none' }}
+              to="cast"
+              state={location.state}
+            >
               Cast
             </Link>
           </li>
@@ -66,6 +71,7 @@ const MovieDetails = () => {
             <Link
               style={{ textDecoration: 'none', color: 'black' }}
               to="reviews"
+              state={location.state}
             >
               reviews
             </Link>

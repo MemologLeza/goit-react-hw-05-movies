@@ -5,7 +5,7 @@ const MovieDetailsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(location.state ?? '/');
+    navigate(location.state ?? '/goit-react-hw-05-movies');
   };
   return (
     <div>
