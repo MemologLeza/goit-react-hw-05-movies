@@ -11,6 +11,7 @@ const MoviesPage = () => {
   const searchQuery = useMemo(() => params.get('search'), [params]);
   const handleSearchMovie = useCallback(async () => {
     try {
+      setLoader(true);
       const data = await getMovieBySearch(searchQuery);
       const newData = data.map(item => ({
         id: item.id,
@@ -18,8 +19,10 @@ const MoviesPage = () => {
       }));
 
       setMoviesData([...newData]);
+      setLoader(false);
     } catch (error) {
       console.log('error', error);
+      setLoader(false);
     }
   }, [searchQuery]);
   useEffect(() => {
@@ -34,8 +37,8 @@ const MoviesPage = () => {
     <div>
       <SearchMovies handleSearch={handleSearch} />
       {loader && <Loader />}
-      {!loader && moviesData.length === 0 ? (
-        searchQuery && moviesData.length === 0 && <h2>Not found</h2>
+      {!loader && moviesData.length === 0 && searchQuery ? (
+        <h2>Not found</h2>
       ) : (
         <MoviesList moviesData={moviesData} />
       )}
